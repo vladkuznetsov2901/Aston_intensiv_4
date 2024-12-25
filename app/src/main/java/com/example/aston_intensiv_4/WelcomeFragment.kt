@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.aston_intensiv_4.databinding.FragmentWelcomeBinding
+import com.example.aston_intensiv_4.task1.FirstFragment
+import com.example.aston_intensiv_4.task2.AllUsersFragment
 
 
 class WelcomeFragment : Fragment() {
@@ -35,6 +37,13 @@ class WelcomeFragment : Fragment() {
             parentFragmentManager.commit {
                 addToBackStack("FirstFragment")
                 replace<FirstFragment>(R.id.fragment_container)
+            }
+        }
+
+        binding.secondTaskButton.setOnClickListener {
+            parentFragmentManager.commit {
+                addToBackStack("AllUsersFragment")
+                replace<AllUsersFragment>(R.id.fragment_container)
             }
         }
 

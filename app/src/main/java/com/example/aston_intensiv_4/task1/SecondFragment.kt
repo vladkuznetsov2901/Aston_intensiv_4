@@ -1,4 +1,4 @@
-package com.example.aston_intensiv_4
+package com.example.aston_intensiv_4.task1
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
-import com.example.aston_intensiv_4.databinding.FragmentFirstBinding
-import com.example.aston_intensiv_4.databinding.FragmentThirdBinding
+import com.example.aston_intensiv_4.R
+import com.example.aston_intensiv_4.databinding.FragmentSecondBinding
 
-class ThirdFragment : Fragment() {
-    private var _binding: FragmentThirdBinding? = null
+class SecondFragment : Fragment() {
+
+    private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,25 +24,27 @@ class ThirdFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentThirdBinding.inflate(layoutInflater)
+        _binding = FragmentSecondBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val message = arguments?.getString(KEY_MESSAGE)
-
-        binding.messageText.text = message
-
-        binding.goToABtn.setOnClickListener {
-            parentFragmentManager.popBackStack("FirstFragment", 0)
+        binding.backBtn.setOnClickListener {
+            parentFragmentManager.popBackStack()
         }
 
-        binding.goToDBtn.setOnClickListener {
+        binding.goToCBtn.setOnClickListener {
+            val thirdFragment = ThirdFragment().apply {
+                arguments = Bundle().apply {
+                    putString(KEY_MESSAGE, "Hello Fragment C")
+                }
+            }
             parentFragmentManager.commit {
-                replace<FourthFragment>(R.id.fragment_container)
-                addToBackStack("FourthFragment")
+                setReorderingAllowed(true)
+                replace(R.id.fragment_container, thirdFragment)
+                addToBackStack("ThirdFragment")
             }
         }
 

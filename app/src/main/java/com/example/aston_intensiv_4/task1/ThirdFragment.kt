@@ -1,6 +1,5 @@
-package com.example.aston_intensiv_4
+package com.example.aston_intensiv_4.task1
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,12 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
-import com.example.aston_intensiv_4.databinding.FragmentFirstBinding
-import com.example.aston_intensiv_4.databinding.FragmentWelcomeBinding
+import com.example.aston_intensiv_4.R
+import com.example.aston_intensiv_4.databinding.FragmentThirdBinding
 
-class FirstFragment : Fragment() {
-
-    private var _binding: FragmentFirstBinding? = null
+class ThirdFragment : Fragment() {
+    private var _binding: FragmentThirdBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,18 +23,25 @@ class FirstFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentFirstBinding.inflate(layoutInflater)
+        _binding = FragmentThirdBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.goToBBtn.setOnClickListener {
+        val message = arguments?.getString(KEY_MESSAGE)
+
+        binding.messageText.text = message
+
+        binding.goToABtn.setOnClickListener {
+            parentFragmentManager.popBackStack("FirstFragment", 0)
+        }
+
+        binding.goToDBtn.setOnClickListener {
             parentFragmentManager.commit {
-                setReorderingAllowed(true)
-                replace<SecondFragment>(R.id.fragment_container)
-                addToBackStack("SecondFragment")
+                replace<FourthFragment>(R.id.fragment_container)
+                addToBackStack("FourthFragment")
             }
         }
 
@@ -48,4 +53,7 @@ class FirstFragment : Fragment() {
         _binding = null
     }
 
+    companion object {
+        const val KEY_MESSAGE = "message"
+    }
 }
