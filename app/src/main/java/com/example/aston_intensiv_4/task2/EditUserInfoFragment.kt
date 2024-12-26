@@ -22,7 +22,7 @@ class EditUserInfoFragment : Fragment() {
     private lateinit var user: User
 
 
-    private val viewModel: MainViewModel by activityViewModels()
+    private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -63,7 +63,10 @@ class EditUserInfoFragment : Fragment() {
                 phoneNumber = binding.userNumberEditText.text.toString()
             )
 
-            viewModel.updateUser(updatedUser)
+            val resultBundle = Bundle().apply {
+                putParcelable(UPDATE_USER_KEY, updatedUser)
+            }
+            parentFragmentManager.setFragmentResult(FRAGMENT_API_KEY, resultBundle)
 
             parentFragmentManager.popBackStack()
         }
@@ -77,6 +80,10 @@ class EditUserInfoFragment : Fragment() {
     }
 
     companion object {
+
+        const val UPDATE_USER_KEY = "updated_user"
+        const val FRAGMENT_API_KEY = "edit_user_result"
+
         fun newInstance(user: User): EditUserInfoFragment {
             val fragment = EditUserInfoFragment()
             val args = Bundle().apply {
